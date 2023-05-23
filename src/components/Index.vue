@@ -4,10 +4,10 @@
     <nav class="image-navbar">
       <ul>
    
-        <li><a href="#">Log In</a></li>
-        <li><a href="#">Sign In</a></li>
-        <li><a href="#">Events</a></li>
-        <li><a href="#">About</a></li>
+        <li><a href="/login">Log In</a></li>
+        <li><a href="/register">Sign In</a></li>
+        <li><a href="/events">Events</a></li>
+        <li><a href="/about">About</a></li>
      
       </ul>
     </nav>
