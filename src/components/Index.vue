@@ -7,7 +7,7 @@
         <li><a href="/login">Log In</a></li>
         <li><a href="/register">Sign In</a></li>
         <li><a href="/events">Events</a></li>
-        <li><a href="/about">About</a></li>
+        <li><a href="https://www.wheels.works/about">About</a></li>
      
       </ul>
     </nav>
