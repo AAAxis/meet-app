@@ -40,10 +40,23 @@ export default {
     return {
       username: '',
       email: '',
-      password: ''
+      password: '',
+      googleAuthInstance: null
     };
   },
+  mounted() {
+    this.loadGoogleAuth();
+  },
   methods: {
+    loadGoogleAuth() {
+      gapi.load('auth2', () => {
+        gapi.auth2.init({
+          client_id: 'YOUR_GOOGLE_CLIENT_ID',
+        }).then(auth2 => {
+          this.googleAuthInstance = auth2;
+        });
+      });
+    },
     register(event) {
       event.preventDefault();
 
@@ -71,36 +84,34 @@ export default {
         });
     },
     googleLogin() {
-      gapi.load('auth2', () => {
-        gapi.auth2.init({
-          client_id: '45791953662-3b6f3cirn7sqm3iif1blfuen8dh2tu48.apps.googleusercontent.com',
-        }).then(auth2 => {
-          auth2.signIn().then(googleUser => {
-            const id_token = googleUser.getAuthResponse().id_token;
+      if (this.googleAuthInstance) {
+        this.googleAuthInstance.signIn().then(googleUser => {
+          const id_token = googleUser.getAuthResponse().id_token;
 
-            fetch('https://rachinsky.pythonanywhere.com/user_register', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                google_token: id_token
-              })
+          fetch('https://rachinsky.pythonanywhere.com/user_register', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              google_token: id_token
             })
-              .then(response => response.json())
-              .then(data => {
-                if (data.redirect) {
-                  window.location.href = data.redirect;
-                } else {
-                  console.error('Registration failed:', data.error);
-                }
-              })
-              .catch(error => {
-                console.error('An error occurred during registration:', error);
-              });
-          });
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.redirect) {
+                window.location.href = data.redirect;
+              } else {
+                console.error('Registration failed:', data.error);
+              }
+            })
+            .catch(error => {
+              console.error('An error occurred during registration:', error);
+            });
         });
-      });
+      } else {
+        console.error('Google Authentication not initialized.');
+      }
     }
   }
 };
