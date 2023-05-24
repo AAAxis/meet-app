@@ -1,10 +1,7 @@
 <template>
   <div>
     <h1>Registration Form</h1>
-    <div id="g_id_onload"
-         data-client_id="45791953662-3b6f3cirn7sqm3iif1blfuen8dh2tu48.apps.googleusercontent.com"
-         data-callback="handleCredentialResponse"
-         data-auto_prompt="false"></div>
+    <div id="g_id_onload" data-client_id="45791953662-3b6f3cirn7sqm3iif1blfuen8dh2tu48.apps.googleusercontent.com"></div>
     <div v-if="registeredEmail">
       <h2>Registered Email:</h2>
       <p>{{ registeredEmail }}</p>
@@ -26,16 +23,20 @@ export default {
     loadGooglePlatform() {
       const script = document.createElement('script');
       script.src = 'https://accounts.google.com/gsi/client';
+      script.async = true;
       script.defer = true;
       script.onload = this.initGooglePlatform;
       document.head.appendChild(script);
     },
     initGooglePlatform() {
-      window.google.accounts.id.initialize({
-        client_id: '45791953662-3b6f3cirn7sqm3iif1blfuen8dh2tu48.apps.googleusercontent.com',
-        callback: this.handleCredentialResponse
+      const clientId = '45791953662-3b6f3cirn7sqm3iif1blfuen8dh2tu48.apps.googleusercontent.com';
+
+      google.accounts.id.initialize({
+        client_id: clientId,
+        callback: this.handleCredentialResponse,
+        prompt_parent_id: 'g_id_onload'
       });
-      window.google.accounts.id.prompt();
+      google.accounts.id.prompt();
     },
     handleCredentialResponse(response) {
       const credential = response.credential;
