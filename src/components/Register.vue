@@ -1,12 +1,21 @@
 <template>
   <div>
+    <h1>Registration Form</h1>
     <button @click="registerWithGoogle">Register with Google</button>
-    <button @click="loginWithGoogle">Login with Google</button>
+    <div v-if="registeredEmail">
+      <h2>Registered Email:</h2>
+      <p>{{ registeredEmail }}</p>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      registeredEmail: '',
+    };
+  },
   methods: {
     async registerWithGoogle() {
       try {
@@ -16,48 +25,22 @@ export default {
         const googleUser = await auth2.signIn();
         const id_token = googleUser.getAuthResponse().id_token;
 
-        // Send the id_token to your Flask backend for registration
-        await this.sendToken('https://rachinsky.pythonanywhere.com/register', id_token);
+        // Perform client-side registration logic
+        this.registerClientSide(id_token);
       } catch (error) {
         console.error('An error occurred:', error);
       }
     },
-    async loginWithGoogle() {
-      try {
-        const auth2 = await gapi.auth2.init({
-          client_id: '45791953662-3b6f3cirn7sqm3iif1blfuen8dh2tu48.apps.googleusercontent.com',
-        });
-        const googleUser = await auth2.signIn();
-        const id_token = googleUser.getAuthResponse().id_token;
+    registerClientSide(id_token) {
+      // Replace this code with your client-side registration logic
+      // For example, you can save the token to local storage or perform any other client-side operations
 
-        // Send the id_token to your Flask backend for login
-        await this.sendToken('https://rachinsky.pythonanywhere.com/login', id_token);
-      } catch (error) {
-        console.error('An error occurred:', error);
-      }
+      // After registration, set the registered email
+      const profile = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
+      this.registeredEmail = profile.getEmail();
+
+      console.log('Token:', id_token);
     },
-    async sendToken(url, token) {
-      try {
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ google_token: token })
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          // Handle the response from the backend
-          console.log(data);
-        } else {
-          throw new Error('Request failed');
-        }
-      } catch (error) {
-        // Handle the error
-        console.error('An error occurred:', error);
-      }
-    }
   },
 };
 </script>
