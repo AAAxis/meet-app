@@ -42,11 +42,12 @@ export default {
       const credential = response.credential;
       const email = credential && credential.id;
       
-      if (email) {
-        console.log('Received email:', email);
-        // Perform client-side registration logic
-        this.registerClientSide(email);
-      }
+      console.log('Response:', response);
+      console.log('Credential:', response.credential);
+      console.log('Credential Properties:', Object.keys(response.credential));
+
+
+
     },
     registerClientSide(email) {
       // Replace this code with your client-side registration logic
