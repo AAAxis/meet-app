@@ -73,7 +73,7 @@ export default {
     googleLogin() {
       gapi.load('auth2', () => {
         gapi.auth2.init({
-          client_id: '426266681784-8bkjpgiu34laubqc95p1k48e4q835dei.apps.googleusercontent.com',
+          client_id: '45791953662-3b6f3cirn7sqm3iif1blfuen8dh2tu48.apps.googleusercontent.com',
         }).then(auth2 => {
           auth2.signIn().then(googleUser => {
             const id_token = googleUser.getAuthResponse().id_token;
