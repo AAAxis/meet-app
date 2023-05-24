@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Registration Form</h1>
-    <div id="g_id_onload" data-client_id="45791953662-3b6f3cirn7sqm3iif1blfuen8dh2tu48.apps.googleusercontent.com"></div>
+    <div id="g_id_onload" data-client_id="YOUR_CLIENT_ID"></div>
     <div v-if="registeredEmail">
       <h2>Registered Email:</h2>
       <p>{{ registeredEmail }}</p>
@@ -29,7 +29,7 @@ export default {
       document.head.appendChild(script);
     },
     initGooglePlatform() {
-      const clientId = '45791953662-3b6f3cirn7sqm3iif1blfuen8dh2tu48.apps.googleusercontent.com';
+      const clientId = 'YOUR_CLIENT_ID';
 
       google.accounts.id.initialize({
         client_id: clientId,
@@ -43,6 +43,7 @@ export default {
       const email = credential && credential.id;
       
       if (email) {
+        console.log('Received email:', email);
         // Perform client-side registration logic
         this.registerClientSide(email);
       }
