@@ -3,6 +3,8 @@ import Index from './components/Index.vue';
 import Login from './components/Login.vue';
 import Register from './components/Register.vue';
 import Events from './components/Events.vue';
+import Dashboard from './components/Dashboard.vue';
+import Admin from './components/Admin.vue';
 
 
 
@@ -13,6 +15,13 @@ const routes = [
     name: 'Index',
     component: Index,
   },
+
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin,
+  },
+
 
   {
     path: '/login',
@@ -30,6 +39,12 @@ const routes = [
     path: '/events',
     name: 'Events',
     component: Events,
+  },
+
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard,
   },
 
 

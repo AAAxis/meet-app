@@ -3,11 +3,12 @@
     <!-- Image Navbar -->
     <nav class="image-navbar">
       <ul>
+        <li><a href="/register">Регистрация</a></li><hr>
+        <li><a href="/login">Войти</a></li><hr>
    
-        <li><a href="/login">Log In</a></li>
-        <li><a href="/register">Sign In</a></li>
-        <li><a href="/events">Events</a></li>
-        <li><a href="https://www.wheels.works/about">About</a></li>
+  
+        <li><a href="/events">Ивенты</a></li><hr>
+        <li><a href="https://www.wheels.works/about">Инфо</a></li>
      
       </ul>
     </nav>
@@ -17,7 +18,7 @@
     <!-- Div with Centered Text -->
     <div class="centered-text">
       <br><br> 
-      <h1>Welcome to MeetApp</h1>
+      <h1>Спид-дейтинг Израиль</h1>
 
       <br>
       <a href="https://polskoydm.pythonanywhere.com/static/android-app-wheels.apk" download="">
@@ -48,7 +49,7 @@ export default {
 <style>
 .full-page-cover {
   height: 100vh; /* Set the container height to cover the entire viewport */
-  background-image: url('https://www.verywellmind.com/thmb/QGS470MKXc4IEqpbQl3qm1bUsuQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1057500046-f7e673d3a91546b0bd419c5d8336b2e0.jpg'); /* Replace with the path to your image */
+  background-image: url('https://rachinsky.pythonanywhere.com/static/Homepage.jpeg'); /* Replace with the path to your image */
   background-size: cover; /* Scale the image to cover the container */
   background-position: center; /* Center the image horizontally and vertically */
 }
@@ -74,7 +75,8 @@ export default {
 
 .image-navbar a {
   text-decoration: none;
-  color: white;
+  color: #1B1B1B;
+  font-size:x-large;
   font-weight: bold;
 }
 
@@ -84,7 +86,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  color: white;
+  color: #1B1B1B;
 }
 
 </style>
