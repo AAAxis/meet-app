@@ -51,7 +51,7 @@ export default {
     loadGoogleAuth() {
       gapi.load('auth2', () => {
         gapi.auth2.init({
-          client_id: 'YOUR_GOOGLE_CLIENT_ID',
+          client_id: '45791953662-3b6f3cirn7sqm3iif1blfuen8dh2tu48.apps.googleusercontent.com',
         }).then(auth2 => {
           this.googleAuthInstance = auth2;
         });
