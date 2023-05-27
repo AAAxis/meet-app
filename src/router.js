@@ -3,8 +3,9 @@ import Index from './components/Index.vue';
 import Login from './components/Login.vue';
 import Register from './components/Register.vue';
 import Events from './components/Events.vue';
-import Dashboard from './components/Dashboard.vue';
+import Navbar from './components/Navbar.vue';
 import Admin from './components/Admin.vue';
+import Email from './components/Email.vue';
 
 
 
@@ -40,11 +41,15 @@ const routes = [
     name: 'Events',
     component: Events,
   },
-
+  {
+    path: '/email',
+    name: 'Email',
+    component: Email,
+  },
   {
     path: '/dashboard',
-    name: 'Dashboard',
-    component: Dashboard,
+    name: 'Navbar',
+    component: Navbar,
   },
 
 

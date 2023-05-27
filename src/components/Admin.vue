@@ -1,46 +1,67 @@
 <template>
     <div>
-      <h1>Events Dashboard</h1>
-      <button class="add-event-button" @click="openAddEventModal">Add Event</button>
-      <ul>
-        <li v-for="event in events" :key="event.id">
-          <h2>{{ event.name }}</h2>
-          <p>Address: {{ event.address }}</p>
-          <img :src="'https://rachinsky.pythonanywhere.com/static/uploads/' + event.file" alt="Event Image">
-          <p>Email: {{ event.email }}</p>
-          <button @click="approveEvent(event.id)">Approve</button>
-          <button @click="declineEvent(event.id)">Decline</button>
-        </li>
-      </ul>
-  
-      <!-- Add Event Modal -->
-      <div v-if="isAddEventModalOpen" class="modal">
-        <div class="modal-content">
-          <h2>Add Event</h2>
-          <form @submit.prevent="createEvent">
-            <label>Name</label><br>
-            <input type="text" v-model="newEvent.name" required><br>
-            <label>Email</label><br>
-            <input type="email" v-model="newEvent.email" required><br>
-            <label>File</label><br>
-            <input type="file" ref="fileInput" accept="image/*" @change="handleFileChange" required><br>
-  
-            <label>Address</label><br>
-            <input type="text" v-model="newEvent.address" required><br>
-            <label>Category</label><br>
-            <input type="text" v-model="newEvent.category"><br>
-            <label>Price</label><br>
-            <input type="number" v-model="newEvent.price"><br>
-            <label>Date and Time</label><br>
-            <input type="text" v-model="newEvent.datetime" required><br>
-            <br>
-            <button type="submit">Create</button>
-            <button @click="closeAddEventModal">Cancel</button>
-          </form>
-        </div>
-      </div>
+      <h1>Admin Dashboard</h1>
+      <table class="event-table">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Address</th>
+         
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="event in events" :key="event.id">
+            <td>
+              <img :src="'https://rachinsky.pythonanywhere.com/static/uploads/' + event.file" alt="Event Image">
+            </td>
+            <td>{{ event.name }}</td>
+            <td>{{ event.address }}</td>
+          
+            <td>{{ event.email }}</td>
+            <td>
+                <span class="action-icon approve-icon" @click="approveEvent(event.id)">
+              <i class="fas fa-check"></i>
+            </span><br>
+            <span class="action-icon decline-icon" @click="declineEvent(event.id)">
+              <i class="fas fa-times"></i>
+            </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </template>
+  
+  <style>
+  .event-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .event-table th,
+  .event-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .event-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .event-table img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+  }
+  
+
+
+  
+  </style>
   
   <script>
   import axios from 'axios';
@@ -48,17 +69,7 @@
   export default {
     data() {
       return {
-        events: [],
-        isAddEventModalOpen: false,
-        newEvent: {
-          name: '',
-          email: '',
-          address: '',
-          file: null, // Updated to store the file object
-          category: '',
-          price: null,
-          datetime: ''
-        }
+        events: []
       };
     },
     mounted() {
@@ -70,48 +81,6 @@
           .get('https://rachinsky.pythonanywhere.com/dashboard')
           .then(response => {
             this.events = response.data.events;
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      },
-      openAddEventModal() {
-        this.isAddEventModalOpen = true;
-      },
-      closeAddEventModal() {
-        this.isAddEventModalOpen = false;
-        this.resetNewEvent();
-      },
-      resetNewEvent() {
-        this.newEvent = {
-          name: '',
-          email: '',
-          address: '',
-          file: null,
-          category: '',
-          price: null,
-          datetime: ''
-        };
-      },
-      handleFileChange(event) {
-        this.newEvent.file = event.target.files[0];
-      },
-      createEvent() {
-        const formData = new FormData();
-        formData.append('name', this.newEvent.name);
-        formData.append('email', this.newEvent.email);
-        formData.append('address', this.newEvent.address);
-        formData.append('file', this.newEvent.file);
-        formData.append('category', this.newEvent.category);
-        formData.append('price', this.newEvent.price);
-        formData.append('datetime', this.newEvent.datetime);
-  
-        axios
-          .post('https://rachinsky.pythonanywhere.com/dashboard', formData)
-          .then(response => {
-            // Event created successfully
-            this.fetchEvents();
-            this.closeAddEventModal();
           })
           .catch(error => {
             console.error(error);

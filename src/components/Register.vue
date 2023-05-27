@@ -1,61 +1,127 @@
-<template>
-  <div>
-    <h1>Registration Form</h1>
-    <div id="g_id_onload" data-client_id="45791953662-3b6f3cirn7sqm3iif1blfuen8dh2tu48.apps.googleusercontent.com"></div>
-    <div v-if="registeredEmail">
-      <h2>Registered Email:</h2>
-      <p>{{ registeredEmail }}</p>
+ <template>
+  <div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+      <div class="card-body p-0">
+        <div class="row">
+          <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+          <div class="col-lg-7">
+            <div class="p-5">
+              <div class="text-center">
+             
+  
+                  <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+            
+              </div>
+                 <form @submit.prevent="register" class="user">
+                <div class="form-group">
+                  <input type="text" v-model="username" class="form-control form-control-user" id="exampleLastName" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                  <input type="email" v-model="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                  <input type="password" v-model="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-success btn-lg">Create</button>
+                <button @click="registerWithGoogle" style="margin-left: 2px;" class="btn btn-primary btn-lg">Join & Google</button>
+           
+                <hr>
+
+              </form>
+    
+
+       
+                  <a class="small" href="/login">Already have an account? Login!</a>
+
+          
+        
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
+
+
+
+
+
 <script>
+import { auth, googleProvider } from '../firebase';
+import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      registeredEmail: ''
+      username: '',
+      email: '',
+      password: '',
     };
   },
-  mounted() {
-    this.loadGooglePlatform();
-  },
+  
   methods: {
-    loadGooglePlatform() {
-      const script = document.createElement('script');
-      script.src = 'https://accounts.google.com/gsi/client';
-      script.async = true;
-      script.defer = true;
-      script.onload = this.initGooglePlatform;
-      document.head.appendChild(script);
+    register() {
+      const userData = {
+        username: this.username,
+        email: this.email,
+        password: this.password
+      };
+
+      axios.post('https://rachinsky.pythonanywhere.com/user_register', userData)
+        .then(response => {
+          // Registration successful
+          var email = this.email;
+          
+          localStorage.setItem('registeredEmail', email);
+
+          // Redirect to the dashboard page
+          this.$router.push('/email');
+        })
+        .catch(error => {
+          // Handle errors
+          console.error("Registration failed:", error.response.data.message);
+        });
     },
-    initGooglePlatform() {
-      const clientId = '45791953662-3b6f3cirn7sqm3iif1blfuen8dh2tu48.apps.googleusercontent.com';
 
-      google.accounts.id.initialize({
-        client_id: clientId,
-        callback: this.handleCredentialResponse,
-        prompt_parent_id: 'g_id_onload'
-      });
-      google.accounts.id.prompt();
-    },
-    handleCredentialResponse(response) {
-      const credential = response.credential;
-      const email = credential && credential.id;
-      
-      console.log('Response:', response);
-      console.log('Credential:', response.credential);
-      console.log('Credential Properties:', Object.keys(response.credential));
+    registerWithGoogle() {
+      signInWithPopup(auth, googleProvider)
+        .then((userCredential) => {
+          // User signed in successfully with Google
+          var user = userCredential.user;
+          var email = user.email;
+          var username = user.displayName;
 
+          const userData = {
+            username: username, // Set an empty value for username
+            email: email,
+            password: 'google' // Set an empty value for password
+          };
 
+          axios.post('https://rachinsky.pythonanywhere.com/user_register', userData)
+            .then(response => {
+              // Registration successful
+              
+              localStorage.setItem('registeredEmail', email);
 
-    },
-    registerClientSide(email) {
-      // Replace this code with your client-side registration logic
-      // For example, you can save the email to local storage or perform any other client-side operations
-
-      // After registration, set the registered email
-      this.registeredEmail = email;
+              // Redirect to the dashboard page
+              this.$router.push('/dashboard');
+            })
+            .catch(error => {
+              // Handle errors
+              console.error("Registration failed:", error.response.data.message);
+            });
+        })
+        .catch((error) => {
+          // Handle errors
+          console.error("Google authentication failed:", error.message);
+        });
     }
   }
 };
+
+
 </script>
+

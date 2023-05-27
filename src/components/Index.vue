@@ -3,10 +3,10 @@
     <!-- Image Navbar -->
     <nav class="image-navbar">
       <ul>
-        <li><a href="/register">Регистрация</a></li><hr>
+
         <li><a href="/login">Войти</a></li><hr>
    
-  
+        <li><a href="/register">Спид-дейтинг</a></li><hr>
         <li><a href="/events">Ивенты</a></li><hr>
         <li><a href="https://www.wheels.works/about">Инфо</a></li>
      
@@ -17,9 +17,7 @@
 
     <!-- Div with Centered Text -->
     <div class="centered-text">
-      <br><br> 
-      <h1>Спид-дейтинг Израиль</h1>
-
+ 
       <br>
       <a href="https://polskoydm.pythonanywhere.com/static/android-app-wheels.apk" download="">
  <img src="https://images.ctfassets.net/23u853certza/1Djo4jOj0doR5PfWVzj9O6/d52acac7f94db66263f5ad9e01c41c82/google-play-badge.png" width="200px;"></a> <br><br>

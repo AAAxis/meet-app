@@ -79,7 +79,7 @@ export default {
         email: this.email,
         password: this.password,
       };
-
+      localStorage.setItem('email', this.email);
       // Make an HTTP POST request to the server
       fetch('https://rachinsky.pythonanywhere.com/user_login', {
         method: 'POST',
@@ -91,8 +91,12 @@ export default {
         .then(response => response.json())
         .then(data => {
           if (data.redirect) {
+            var email = this.email;
+          
+          localStorage.setItem('registeredEmail', email);
             // Redirect to the dashboard page
             window.location.href = data.redirect;
+          
           } else if (data.error) {
             // Display error message to the user
             console.error(data.error);

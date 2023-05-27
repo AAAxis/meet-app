@@ -1,194 +1,147 @@
 <template>
     <div>
-      <h1>Explore more upcoming events</h1>
-      <button class="add-event-button" @click="openAddEventModal">Start a new group</button>
-      <ul>
-        <li v-for="event in events" :key="event.id">
-          <h2>{{ event.name }}</h2>
-          <p>Address: {{ event.address }}</p>
-          <img :src="'https://rachinsky.pythonanywhere.com/static/uploads/' + event.file" alt="Event Image">
-          <p>Email: {{ event.email }}</p>
-        </li>
-      </ul>
-  
-      <!-- Add Event Modal -->
-      <div v-if="isAddEventModalOpen" class="modal">
-        <div class="modal-content">
-          <h2>Add Event</h2>
-          <form @submit.prevent="createEvent">
-
-          <label>File</label><br>
-        <input type="file" ref="fileInput" accept="image/*" @change="handleFileChange" required><br>
-        <label>Name</label><br>
-          <input type="text" v-model="newEvent.name" required><br>
-          <label>Address</label><br>
-          <input type="text" v-model="newEvent.address" required><br>
-   
-   
-          <label>Price</label><br>
-          <input type="number" v-model="newEvent.price"><br>
-          <label>Date and Time</label><br>
-          <input type="text" v-model="newEvent.datetime" required><br>
-          <br>
-                
-          <select v-model="newEvent.category">
-  <option value="">Select Category</option>
-  <option value="Art">Art</option>
-  <option value="Hobby">Hobby</option>
-  <option value="Dates">Dates</option>
-  <option value="Standup">Standup</option>
-</select>
-      <br>     <br>
-            <button type="submit">Create</button>
-            <button @click="closeAddEventModal">Cancel</button>
-          </form>
-        </div>
+      <div class="topnav" id="myTopnav">
+        <button @click="selectCategory('Standup')" class="category-button">Stand-up</button>
+        <button @click="selectCategory('Hobby')" class="category-button">Hobby</button>
+        <button @click="selectCategory('Dates')" class="category-button">Dating</button>
+        <button @click="selectCategory('Art')" class="category-button">Pop-Art</button>
+        <button @click="selectCategory('')" class="category-button">Show All</button>
       </div>
+  
+      <h1 style="margin: 1rem;">EVENTS NEAR YOU</h1>
+  
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div v-for="event in filteredEvents" :key="event.id" class="swiper-slide">
+            <div style="height: 461px; margin: 10px; width: 370px;" class="gallery-cell">
+              <div class="card">
+                <img style="object-fit: cover;" :src="'https://rachinsky.pythonanywhere.com/static/uploads/' + event.file" height="470" width="370" alt="Event Image">
+                <div class="event-info">
+                  <div class="left-info">
+                    <h2 class="event-name">{{ event.name }}</h2>
+                    <div class="address">
+                      <i class="fa fa-map-marker"></i>
+                      <span class="location-text">{{ event.address }}</span>
+                    </div>
+                  </div>
+                  <div class="right-info">
+                    <div class="event-date">{{ event.datetime }}</div>
+                    <div class="address">
+                     <i class="fa-solid fa-mug-hot"></i>
+                      <span class="location-text">{{ event.category }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <a href="/login">
+                    <div class="swipe-symbols">
+                      <div class="like-symbol">
+                        <i class="fa fa-thumbs-up"></i>
+                      </div>
+                      <div class="decline-symbol">
+                        <i class="fa fa-thumbs-down"></i>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+  
+      <div class="search-container">
+        <input type="text" v-model="searchQuery" placeholder="Search" />
+        <button class="search-button">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+  
     </div>
+  
+   
   </template>
   
- 
-
+  
   <script>
   import axios from 'axios';
+  import Swiper from 'swiper';
+  import 'swiper/swiper-bundle.css';
   
   export default {
     data() {
       return {
         events: [],
-        isAddEventModalOpen: false,
-        newEvent: {
-          name: '',
-          email: '',
-          address: '',
-          file: null, // Updated to store the file object
-          category: '',
-          price: null,
-          datetime: ''
-        }
+        searchQuery: '',
+        selectedCategory: null,
+        swiper: null // Added swiper property
       };
     },
+  
     mounted() {
       this.fetchEvents();
+    },
+    computed: {
+      filteredEvents() {
+        let filtered = this.events;
+  
+        if (this.searchQuery) {
+          const query = this.searchQuery.toLowerCase();
+          filtered = filtered.filter(event =>
+            event.name.toLowerCase().includes(query)
+          );
+        }
+  
+        if (this.selectedCategory) {
+          filtered = filtered.filter(event =>
+            event.category === this.selectedCategory
+          );
+        }
+  
+        return filtered;
+      }
     },
     methods: {
       fetchEvents() {
         axios
-          .get('https://rachinsky.pythonanywhere.com/dashboard')
+          .get('https://rachinsky.pythonanywhere.com/landing')
           .then(response => {
             this.events = response.data.events;
+            this.initializeSwiper(); // Initialize swiper after fetching events
           })
           .catch(error => {
             console.error(error);
           });
       },
-      openAddEventModal() {
-        this.isAddEventModalOpen = true;
+  
+      initializeSwiper() {
+        this.swiper = new Swiper('.swiper-container', {
+          slidesPerView: 1,
+          spaceBetween: 10,
+          loop: true,
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+          }
+        });
       },
-      closeAddEventModal() {
-        this.isAddEventModalOpen = false;
-        this.resetNewEvent();
+  
+      updateSwiperLayout() {
+        if (this.swiper) {
+          this.swiper.update(); // Update Swiper layout
+        }
       },
-      resetNewEvent() {
-        this.newEvent = {
-          name: '',
-          email: '',
-          address: '',
-          file: null,
-          category: '',
-          price: null,
-          datetime: ''
-        };
-      },
-      handleFileChange(event) {
-        this.newEvent.file = event.target.files[0];
-      },
-      createEvent() {
-        const formData = new FormData();
-        formData.append('name', this.newEvent.name);
-        formData.append('email', this.newEvent.email);
-        formData.append('address', this.newEvent.address);
-        formData.append('file', this.newEvent.file);
-        formData.append('category', this.newEvent.category);
-        formData.append('price', this.newEvent.price);
-        formData.append('datetime', this.newEvent.datetime);
-        
-        axios
-          .post('https://rachinsky.pythonanywhere.com/dashboard', formData)
-          .then(response => {
-            // Event created successfully
-            this.fetchEvents();
-            this.closeAddEventModal();
-          })
-          .catch(error => {
-            console.error(error);
-          });
+  
+      selectCategory(category) {
+        this.selectedCategory = category;
+  
+        // Trigger re-evaluation of computed property after updating the selected category
+        this.$nextTick(() => {
+          this.filteredEvents;
+          this.updateSwiperLayout(); // Update Swiper layout after filtering
+        });
       }
     }
   };
   </script>
-
-
-  <style>
-  .add-event-button {
-    background-color: #1e88e5;
-    color: #ffffff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-
-  h2 {
-    font-size: 18px;
-    margin-bottom: 5px;
-  }
-  
-  p {
-    margin: 0;
-  }
-  
-  /* CSS styles for modal */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* CSS styles for button */
-.add-event-button {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.add-event-button:hover {
-  background-color: #0056b3;
-}
-
-  /* Add more CSS styles as needed */
-  </style>
-  
