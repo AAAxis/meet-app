@@ -41,6 +41,7 @@
       <a href="#"><img :src="userImage" style="height:100px" alt="Image"></a>
       <hr style="color:grey; margin-left:2rem; margin-right:2rem;">
       <a style="color:white">{{ userEmail }}</a>
+      <a :href="getProfileLink(userEmail)" style="color:white">Edit Profile</a>
       <a style="color:white" @click="logout">Logout</a>
     </div>
  
@@ -66,6 +67,10 @@ export default {
     };
   },
   methods: {
+
+    getProfileLink(userEmail) {
+    return `https://rachinsky.pythonanywhere.com/${userEmail}/profile`;
+  },
     fetchGravatar(userEmail) {
   const hash = md5(userEmail.trim().toLowerCase()); // Hash the email
   const gravatarUrl = `https://www.gravatar.com/avatar/${hash}`;

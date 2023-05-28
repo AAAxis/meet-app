@@ -1,29 +1,18 @@
- <template>
-  <div class="container">
-    <div class="card o-hidden border-0 shadow-lg my-5">
-      <div class="card-body p-0">
-        <div class="row">
-          <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
-          <div class="col-lg-7">
-            <div class="p-5">
-              <div class="text-center">
-             
+<template>
+
   
-                  <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
-            
-              </div>
-                 <form @submit.prevent="register" class="user">
-                <div class="form-group">
-                  <input type="text" v-model="username" class="form-control form-control-user" id="exampleLastName" placeholder="Username" required>
-                </div>
-                <div class="form-group">
-                  <input type="email" v-model="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address" required>
-                </div>
-                <div class="form-group">
-                  <input type="password" v-model="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" required>
-                </div>
-                <button type="submit" class="btn btn-success btn-lg">Create</button>
-                <button @click="registerWithGoogle" style="margin-left: 2px;" class="btn btn-primary btn-lg">Join & Google</button>
+                  <h1>Create an Account!</h1>
+           
+                 <form @submit.prevent="register">
+      
+                  <input type="text" v-model="username"   placeholder="Username" required>
+           
+                  <input type="email" v-model="email" placeholder="Email Address" required>
+        
+                  <input type="password" v-model="password"  placeholder="Password" required>
+  
+                <button type="submit">Create</button>
+                <button style="background-color: rgb(34, 90, 244);" @click="registerWithGoogle">Join & Google</button>
            
                 <hr>
 
@@ -31,16 +20,7 @@
     
 
        
-                  <a class="small" href="/login">Already have an account? Login!</a>
-
-          
-        
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+                  <a href="/login">Already have an account? Login!</a>
 </template>
 
 
@@ -125,3 +105,70 @@ export default {
 
 </script>
 
+<style scoped>
+
+/* Reset default styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+}
+
+h1 {
+  text-align: center;
+  margin: 20px 0;
+}
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+a {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: #333;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+</style>

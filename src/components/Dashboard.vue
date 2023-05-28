@@ -27,7 +27,7 @@
                   <div class="right-info">
                     <div class="event-date">{{ event.datetime }}</div>
                     <div class="address">
-                     <i class="fa-solid fa-mug-hot"></i>
+                      <i class="fa-solid fa-mug-hot"></i>
                       <span class="location-text">{{ event.category }}</span>
                     </div>
                   </div>
@@ -48,7 +48,6 @@
             </div>
           </div>
         </div>
-  
       </div>
   
       <div class="search-container">
@@ -59,10 +58,7 @@
       </div>
   
     </div>
-  
-   
   </template>
-  
   
   <script>
   import axios from 'axios';
@@ -99,13 +95,16 @@
           );
         }
   
+        // Filter only the events that are approved
+        filtered = filtered.filter(event => event.approved === true);
+  
         return filtered;
       }
     },
     methods: {
       fetchEvents() {
         axios
-          .get('https://rachinsky.pythonanywhere.com/landing')
+          .get('https://rachinsky.pythonanywhere.com/dashboard')
           .then(response => {
             this.events = response.data.events;
             this.initializeSwiper(); // Initialize swiper after fetching events
@@ -145,3 +144,4 @@
     }
   };
   </script>
+  

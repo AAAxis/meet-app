@@ -27,7 +27,7 @@
                 <div class="right-info">
                   <div class="event-date">{{ event.datetime }}</div>
                   <div class="address">
-                   <i class="fa-solid fa-mug-hot"></i>
+                    <i class="fa-solid fa-mug-hot"></i>
                     <span class="location-text">{{ event.category }}</span>
                   </div>
                 </div>
@@ -48,7 +48,6 @@
           </div>
         </div>
       </div>
-
     </div>
 
     <div class="search-container">
@@ -66,7 +65,7 @@
         <i class="fa-regular fa-user fa-lg"></i>
         <span class="footer-button-label">Profile</span>
       </a>
-      <a href="/" class="footer-button">
+      <a href="/login" class="footer-button">
         <i class="fa-regular fa-font-awesome fa-lg"></i>
         <span class="footer-button-label">Home</span>
       </a>
@@ -82,13 +81,16 @@
   </div>
 </template>
 
-
 <script>
 import axios from 'axios';
 import Swiper from 'swiper';
 import 'swiper/swiper-bundle.css';
+import Navbar from './Navbar.vue';
 
 export default {
+  components: {
+    Navbar
+  },
   data() {
     return {
       events: [],
@@ -101,9 +103,11 @@ export default {
   mounted() {
     this.fetchEvents();
   },
+
   computed: {
     filteredEvents() {
-      let filtered = this.events;
+      let filtered = this.events.filter(event => event.approved == true);
+
 
       if (this.searchQuery) {
         const query = this.searchQuery.toLowerCase();
@@ -121,10 +125,11 @@ export default {
       return filtered;
     }
   },
+
   methods: {
     fetchEvents() {
       axios
-        .get('https://rachinsky.pythonanywhere.com/landing')
+        .get('https://rachinsky.pythonanywhere.com/dashboard')
         .then(response => {
           this.events = response.data.events;
           this.initializeSwiper(); // Initialize swiper after fetching events
@@ -146,20 +151,8 @@ export default {
       });
     },
 
-    updateSwiperLayout() {
-      if (this.swiper) {
-        this.swiper.update(); // Update Swiper layout
-      }
-    },
-
     selectCategory(category) {
       this.selectedCategory = category;
-
-      // Trigger re-evaluation of computed property after updating the selected category
-      this.$nextTick(() => {
-        this.filteredEvents;
-        this.updateSwiperLayout(); // Update Swiper layout after filtering
-      });
     }
   }
 };
