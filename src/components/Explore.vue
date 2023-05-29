@@ -1,12 +1,6 @@
 <template>
-    <div>
-      <div class="topnav" id="myTopnav">
-        <button @click="selectCategory('Standup')" class="category-button">Stand-up</button>
-        <button @click="selectCategory('Hobby')" class="category-button">Hobby</button>
-        <button @click="selectCategory('Dates')" class="category-button">Dating</button>
-        <button @click="selectCategory('Art')" class="category-button">Pop-Art</button>
-        <button @click="selectCategory('')" class="category-button">Show All</button>
-      </div>
+ 
+     
       <div class="container my-5">
   <div class="position-relative p-5 text-center text-muted bg-body border border-dashed rounded-5">
     <button type="button" class="position-absolute top-0 end-0 p-3 m-3 btn-close bg-secondary bg-opacity-10 rounded-pill" aria-label="Close"></button>
@@ -23,39 +17,20 @@
  
 
 
-<div v-for="event in filteredEvents" :key="event.id" class="list-item">
+<div v-for="event in events" :key="event.id" class="list-item">
   <div class="card">
     <div class="image-wrapper">
       <img style="object-fit: cover;" :src="'https://rachinsky.pythonanywhere.com/static/uploads/' + event.file" height="109" width="350" alt="Event Image">
       <div class="image-text">{{ event.name }}</div>
-      <button class="rsvp-button">Join</button>
+    
     </div>
   </div>
 </div>
 
-</div>
+
 
   <br><br>  <br><br><br>
-    <div class="footer">
-    <div class="footer-buttons">
-      <a href="/login" class="footer-button">
-        <i class="fa-regular fa-user fa-lg"></i>
-        <span class="footer-button-label">Profile</span>
-      </a>
-      <a href="/" class="footer-button">
-        <i class="fa-regular fa-font-awesome fa-lg"></i>
-        <span class="footer-button-label">Home</span>
-      </a>
-      <a href="/login" class="footer-button">
-        <i class="fa-solid fa-people-pulling fa-lg"></i>
-        <span class="footer-button-label fa-lg">Explore</span>
-      </a>
-      <a href="/login" class="footer-button">
-        <i class="fa-regular fa-comments fa-lg"></i>
-        <span class="footer-button-label">Messages</span>
-      </a>
-    </div>
-  </div>
+   
 
 
 
@@ -132,8 +107,7 @@ export default {
         price: "Free",
         datetime: ''
       },
-      searchQuery: '',
-      selectedCategory: null,
+    
       swiper: null
     };
   },
@@ -156,27 +130,6 @@ export default {
 
     // Retrieve the email from local storage and assign it to the data property
     this.userEmail = localStorage.getItem('registeredEmail');
-  },
-
-  computed: {
-    filteredEvents() {
-      let filtered = this.events;
-
-      if (this.searchQuery) {
-        const query = this.searchQuery.toLowerCase();
-        filtered = filtered.filter(event =>
-          event.name.toLowerCase().includes(query)
-        );
-      }
-
-      if (this.selectedCategory) {
-        filtered = filtered.filter(event =>
-          event.category === this.selectedCategory
-        );
-      }
-
-      return filtered;
-    }
   },
 
   methods: {
@@ -231,14 +184,7 @@ export default {
       }
     },
 
-    selectCategory(category) {
-      this.selectedCategory = category;
 
-      this.$nextTick(() => {
-        this.filteredEvents;
-        this.updateSwiperLayout();
-      });
-    },
 
     openAddEventModal() {
       this.isAddEventModalOpen = true;

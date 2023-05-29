@@ -5,6 +5,12 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://kit.fontawesome.com/003aac0f2b.js" crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <!-- Local CSS and JS -->
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -16,6 +22,7 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_lrJ8aPsCBNQqljrGavBIVTA3ucTxaUs&libraries=places"></script>
 
+    <script src="https://www.paypal.com/sdk/js?client-id=ARMncwmJzuoeXSG82hulypHNqucjFwIfgrfLocUtj16ffuCIUJaWuFuRcqLPBwvkB8uL6QmERjkX2b05&components=buttons"></script>
 
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -625,7 +632,6 @@ width: 100%;
 
 
 
-
 .swipe-symbols {
 position: absolute;
 top: 50%;
@@ -635,7 +641,7 @@ display: none;
 }
 
 .swipe-symbols .like-symbol,
-.swipe-symbols .decline-symbol {
+.swipe-symbols .plus-symbol {
 display: inline-block;
 width: 50px;
 height: 50px;
@@ -652,7 +658,7 @@ margin-right: 20px;
 color: green;
 }
 
-.swipe-symbols .decline-symbol {
+.swipe-symbols .plus-symbol {
 margin-left: 20px;
 color: red;
 }
@@ -675,7 +681,7 @@ align-items: flex-end;
 background-color: rgba(0, 0, 0, 0.5); /* Change the transparency as desired */
 color: #fff;
 padding: 30px;
-margin-bottom: 30px;
+
 box-sizing: border-box;
 }
 

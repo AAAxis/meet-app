@@ -15,7 +15,20 @@
         <div v-for="event in filteredEvents" :key="event.id" class="swiper-slide">
           <div style="height: 461px; margin: 10px; width: 370px;" class="gallery-cell">
             <div class="card">
+             
               <img style="object-fit: cover;" :src="'https://rachinsky.pythonanywhere.com/static/uploads/' + event.file" height="470" width="370" alt="Event Image">
+              <div class="swipe-symbols">
+
+<div class="like-symbol">
+    <a href="/login">  <i class="fa-solid fa-bookmark"></i>    </a>
+</div>
+
+<div class="plus-symbol">
+  <a href="/login"> <i class="fa-solid fa-user-plus"></i>  </a>
+
+
+</div>
+</div>
               <div class="event-info">
                 <div class="left-info">
                   <h2 class="event-name">{{ event.name }}</h2>
@@ -32,23 +45,14 @@
                   </div>
                 </div>
               </div>
-              <div class="card-body">
-                <a href="/login">
-                  <div class="swipe-symbols">
-                    <div class="like-symbol">
-                      <i class="fa fa-thumbs-up"></i>
-                    </div>
-                    <div class="decline-symbol">
-                      <i class="fa fa-thumbs-down"></i>
-                    </div>
-                  </div>
-                </a>
+            
+        
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+
 
     <div class="search-container">
       <input type="text" v-model="searchQuery" placeholder="Search" />

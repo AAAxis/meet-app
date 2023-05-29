@@ -24,7 +24,7 @@
     </a>
         <a @click="showComponent('Messages')" class="footer-button">
             <i class="fa-regular fa-comments fa-lg"></i>
-        <span class="footer-button-label">Messages</span>
+        <span class="footer-button-label">Notifications</span>
 
       </a>
   
