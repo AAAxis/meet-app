@@ -4,11 +4,9 @@
     <nav class="image-navbar">
       <ul>
 
-        <li><a href="/login">Войти</a></li><hr>
-   
-        <li><a href="/register">Спид-дейтинг</a></li><hr>
-        <li><a href="/events">Ивенты</a></li><hr>
-        <li><a href="https://www.wheels.works/about">Инфо</a></li>
+        <li><a href="/login">Sign Up</a></li><hr>
+        <li><a href="/events">Events</a></li><hr>
+        <li><a href="https://www.wheels.works/about">About</a></li>
      
       </ul>
     </nav>

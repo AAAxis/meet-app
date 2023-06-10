@@ -16,7 +16,7 @@
           <div style="height: 461px; margin: 10px; width: 370px;" class="gallery-cell">
             <div class="card">
              
-              <img style="object-fit: cover;" :src="'https://rachinsky.pythonanywhere.com/static/uploads/' + event.file" height="470" width="370" alt="Event Image">
+              <img style="object-fit: cover;" :src="'https://rachinsky.pythonanywhere.com/static/uploads/' + event.file" height="450" width="370" alt="Event Image">
               <div class="swipe-symbols">
 
 <div class="like-symbol">
@@ -62,7 +62,7 @@
     </div>
 
   </div>
-
+<br><br><br><br><br>
   <div class="footer">
     <div class="footer-buttons">
       <a href="/login" class="footer-button">
