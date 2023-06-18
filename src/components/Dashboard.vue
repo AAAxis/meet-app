@@ -1,12 +1,6 @@
 <template>
 
-      <div class="topnav" id="myTopnav">
-        <button @click="selectCategory('Standup')" class="category-button">Stand-up</button>
-        <button @click="selectCategory('Hobby')" class="category-button">Hobby</button>
-        <button @click="selectCategory('Dates')" class="category-button">Dating</button>
-        <button @click="selectCategory('Art')" class="category-button">Pop-Art</button>
-        <button @click="selectCategory('')" class="category-button">Show All</button>
-      </div>
+  
   
       <h1 style="margin: 1rem;">EVENTS NEAR YOU</h1>
   
@@ -126,7 +120,6 @@ export default {
       selectedEventId: null,
       events: [],
       searchQuery: '',
-      selectedCategory: null,
       swiper: null,
       eventPrice: null, 
       eventName: null,
@@ -156,11 +149,6 @@ export default {
         );
       }
 
-      if (this.selectedCategory) {
-        filtered = filtered.filter(event =>
-          event.category === this.selectedCategory
-        );
-      }
 
       // Filter only the events that are approved
       filtered = filtered.filter(event => event.approved === true);

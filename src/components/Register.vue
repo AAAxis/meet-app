@@ -2,7 +2,7 @@
 
   
                   <h1>Create an Account!</h1>
-           
+                 
                  <form @submit.prevent="register">
       
                   <input type="text" v-model="username"   placeholder="Username" required>
@@ -11,13 +11,15 @@
         
                   <input type="password" v-model="password"  placeholder="Password" required>
   
-                <button type="submit">Create</button>
-                <button style="background-color: rgb(34, 90, 244);" @click="registerWithGoogle">Join & Google</button>
-           
-                <hr>
+                <button style="  width:100%; " type="submit">Create</button>
+               
+              
 
               </form>
-    
+        
+              <button style=" margin-top:5pm run bu%; margin-left:7%; width:87%; background-color: rgb(34, 90, 244);" @click="registerWithGoogle">Connect with Google</button>
+          <br>
+                <hr>
 
        
                   <a href="/login">Already have an account? Login!</a>
@@ -80,7 +82,11 @@ export default {
             password: 'google' // Set an empty value for password
           };
 
-          axios.post('https://rachinsky.pythonanywhere.com/user_register', userData)
+          const headers = {
+              'User-Agent': 'Chrome',
+            };
+
+          axios.post('https://rachinsky.pythonanywhere.com/user_register', userData, { headers })
             .then(response => {
               // Registration successful
               

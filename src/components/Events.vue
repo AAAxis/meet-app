@@ -1,12 +1,6 @@
 <template>
   <div>
-    <div class="topnav" id="myTopnav">
-      <button @click="selectCategory('Standup')" class="category-button">Stand-up</button>
-      <button @click="selectCategory('Hobby')" class="category-button">Hobby</button>
-      <button @click="selectCategory('Dates')" class="category-button">Dating</button>
-      <button @click="selectCategory('Art')" class="category-button">Pop-Art</button>
-      <button @click="selectCategory('')" class="category-button">Show All</button>
-    </div>
+   
 
     <h1 style="margin: 1rem;">EVENTS NEAR YOU</h1>
 
@@ -20,11 +14,11 @@
               <div class="swipe-symbols">
 
 <div class="like-symbol">
-    <a href="/login">  <i class="fa-solid fa-bookmark"></i>    </a>
+    <a style='color:green' href="/register">  <i class="fa-solid fa-bookmark"></i>    </a>
 </div>
 
 <div class="plus-symbol">
-  <a href="/login"> <i class="fa-solid fa-user-plus"></i>  </a>
+  <a style='color:red' href="/register"> <i class="fa-solid fa-user-plus"></i>  </a>
 
 
 </div>
@@ -65,19 +59,19 @@
 <br><br><br><br><br>
   <div class="footer">
     <div class="footer-buttons">
-      <a href="/login" class="footer-button">
+      <a href="/register" class="footer-button">
         <i class="fa-regular fa-user fa-lg"></i>
         <span class="footer-button-label">Profile</span>
       </a>
-      <a href="/login" class="footer-button">
+      <a href="/register" class="footer-button">
         <i class="fa-regular fa-font-awesome fa-lg"></i>
         <span class="footer-button-label">Home</span>
       </a>
-      <a href="/login" class="footer-button">
+      <a href="/register" class="footer-button">
         <i class="fa-solid fa-people-pulling fa-lg"></i>
         <span class="footer-button-label fa-lg">Explore</span>
       </a>
-      <a href="/login" class="footer-button">
+      <a href="/register" class="footer-button">
         <i class="fa-regular fa-comments fa-lg"></i>
         <span class="footer-button-label">Messages</span>
       </a>
@@ -99,7 +93,6 @@ export default {
     return {
       events: [],
       searchQuery: '',
-      selectedCategory: null,
       swiper: null // Added swiper property
     };
   },
@@ -117,12 +110,6 @@ export default {
         const query = this.searchQuery.toLowerCase();
         filtered = filtered.filter(event =>
           event.name.toLowerCase().includes(query)
-        );
-      }
-
-      if (this.selectedCategory) {
-        filtered = filtered.filter(event =>
-          event.category === this.selectedCategory
         );
       }
 
@@ -155,9 +142,6 @@ export default {
       });
     },
 
-    selectCategory(category) {
-      this.selectedCategory = category;
-    }
   }
 };
 </script>

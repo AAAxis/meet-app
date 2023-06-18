@@ -17,6 +17,8 @@ const routes = [
     component: Index,
   },
 
+  
+
   {
     path: '/admin',
     name: 'Admin',
