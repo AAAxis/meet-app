@@ -1,15 +1,6 @@
 <template>
   <div class="full-page-cover">
-    <!-- Image Navbar -->
-    <nav class="image-navbar">
-      <ul>
-
-        <li><a href="/login">Sign Up</a></li><hr>
-        <li><a href="/events">Events</a></li><hr>
-        <li><a href="https://www.wheels.works/about">About</a></li>
-     
-      </ul>
-    </nav>
+<h1 style="padding:3rem;">Speed Dating Israel</h1>
 
     <!-- Your page content here -->
 

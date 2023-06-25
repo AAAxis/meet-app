@@ -7,9 +7,9 @@
       <div class="swiper-container">
         <div class="swiper-wrapper">
           <div v-for="event in filteredEvents" :key="event.id" class="swiper-slide">
-            <div style="height: 461px; margin: 10px; width: 370px;" class="gallery-cell">
+            <div style="height: 461px; margin: 10px; width: 95%;" class="gallery-cell">
               <div class="card">
-                <img style="object-fit: cover;" :src="'https://rachinsky.pythonanywhere.com/static/uploads/' + event.file" height="450" width="370" alt="Event Image">
+                <img style="object-fit: cover;" :src="'https://rachinsky.pythonanywhere.com/static/uploads/' + event.file" height="450"  alt="Event Image">
                 <div class="swipe-symbols">
 
 <div class="like-symbol">
@@ -133,6 +133,16 @@ export default {
     this.fetchLikedEvents();
     this.fetchEvents();
     this.initializeSwiper(); // Initialize swiper after fetching events
+    const urlParams = new URLSearchParams(window.location.search);
+  const email = urlParams.get('email');
+
+  if (email) {
+    localStorage.setItem('registeredEmail', email);
+  }
+
+  this.fetchLikedEvents();
+  this.fetchEvents();
+  this.initializeSwiper();
 
 
 
