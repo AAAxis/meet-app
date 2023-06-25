@@ -1,6 +1,6 @@
 <template>
   <div class="full-page-cover">
-<h1 style="padding:3rem;">Speed Dating Israel</h1>
+<h1 style="padding:3rem;">Meetup Israel</h1>
 
     <!-- Your page content here -->
 
